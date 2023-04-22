@@ -178,6 +178,7 @@ export default function Home() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
+    checkIsWalletConnected();
     getTokenInfo();
   }, [isWalletConnected]);
   return (
