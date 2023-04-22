@@ -19,8 +19,8 @@ export default function Home() {
   const contractAbi = abi.abi;
 
   const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [userWallet, setUserWallet] = useState(null);
-  const [ownerWallet, setOwnerWallet] = useState(null);
+  const [userWallet, setUserWallet] = useState<string|null>(null);
+  const [ownerWallet, setOwnerWallet] = useState<string|null>(null);
   const [isOwner, setIsOwner] = useState(false);
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -258,7 +258,9 @@ export default function Home() {
                   name="transferAmount"
                   value={inputValue.transferAmount}
                 />
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="contained" disabled={
+                  inputValue.wallet.length!==42 ||Number(inputValue.transferAmount)<=0||inputValue.wallet.toLowerCase()===ownerWallet?.toLowerCase()
+                }>
                   Transfer
                 </Button>
               </FormGroup>
@@ -267,7 +269,7 @@ export default function Home() {
           {isOwner && (
             <Box
               component={"form"}
-              onSubmit={transferTokens}
+              onSubmit={burnTokens}
               sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             >
               <FormGroup sx={{ gap: "2px" }}>
@@ -280,7 +282,10 @@ export default function Home() {
                   value={inputValue.burnAmount}
                 />
 
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="contained"
+                
+                disabled={Number(inputValue.burnAmount)<=0}
+                >
                   Burn
                 </Button>
               </FormGroup>
@@ -289,7 +294,7 @@ export default function Home() {
           {isOwner && (
             <Box
               component={"form"}
-              onSubmit={transferTokens}
+              onSubmit={mintTokens}
               sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             >
               <FormGroup sx={{ gap: "2px" }}>
@@ -302,8 +307,8 @@ export default function Home() {
                   value={inputValue.mintAmount}
                 />
 
-                <Button type="submit" variant="contained">
-                  Burn
+                <Button type="submit" variant="contained" disabled={Number(inputValue.mintAmount)<=0}>
+                  Mint
                 </Button>
               </FormGroup>
             </Box>
