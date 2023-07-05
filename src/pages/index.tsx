@@ -210,7 +210,7 @@ export default function Home() {
       >
         <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography variant="h4">
-            Welcome to {tokenName || " the Project2 for Ethereum 101"}
+            Welcome to {tokenName || "CocoCoin"}
           </Typography>
           <Divider dir="horizontal" flexItem />
           {!isWalletConnected && (
